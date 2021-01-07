@@ -21,12 +21,20 @@ The Add-AzureADDeviceRegisteredOwner cmdlet adds a registerd owner for an Azure 
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### Example 1: Add a user as a registered owner
+```
+PS C:\> $User = Get-AzureADUser -Top 1
+PS C:\> $Device = Get-AzureADDevice -Top 1
+PS C:\> Add-AzureADDeviceRegisteredOwner -ObjectId $Device.ObjectId -RefObjectId $User.ObjectId
 ```
 
-{{ Add example description here }}
+The first command gets a user by using the Get-AzureADUser (./Get-AzureADUser.md)cmdlet, and then stores it in the $User variable.
+
+The second command gets a device by using the Get-AzureADDevice (./Get-AzureADDevice.md)cmdlet, and then stores it in the $Device variable.
+
+The final command adds the user in $User as the registered owner for the device in $Device. 
+Both parameters use the ObjectId property of specified object.
+
 
 ## PARAMETERS
 
