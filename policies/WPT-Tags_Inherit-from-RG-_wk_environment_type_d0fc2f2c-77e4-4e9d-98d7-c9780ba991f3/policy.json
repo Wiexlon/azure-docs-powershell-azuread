@@ -1,0 +1,56 @@
+{
+ "properties": {
+  "displayName": "WPT-Tags: Inherit-from-RG-[wk_environment_type]",
+  "policyType": "Custom",
+  "mode": "Indexed",
+  "description": "This policy definition will inherit the tag value of the resource group of a given tag when the resource is created.",
+  "metadata": {
+   "category": "Tags",
+   "createdBy": "463f02d1-cb6e-4d36-a636-bbb9d85c89a3",
+   "createdOn": "2022-01-26T22:46:33.6932916Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "tagName": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Tag Name",
+     "description": "Name of the tag, such as 'environment'"
+    }
+   }
+  },
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "[concat('tags[', parameters('tagName'), ']')]",
+      "notEquals": "[resourceGroup().tags[parameters('tagName')]]"
+     },
+     {
+      "value": "[resourceGroup().tags[parameters('tagName')]]",
+      "notEquals": ""
+     }
+    ]
+   },
+   "then": {
+    "effect": "modify",
+    "details": {
+     "roleDefinitionIds": [
+      "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+     ],
+     "operations": [
+      {
+       "operation": "addOrReplace",
+       "field": "[concat('tags[', parameters('tagName'), ']')]",
+       "value": "[resourceGroup().tags[parameters('tagName')]]"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "id": "/subscriptions/48436512-9c32-4756-89d7-f9acc8423b63/providers/Microsoft.Authorization/policyDefinitions/d0fc2f2c-77e4-4e9d-98d7-c9780ba991f3",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "d0fc2f2c-77e4-4e9d-98d7-c9780ba991f3"
+}
